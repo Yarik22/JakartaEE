@@ -8,10 +8,10 @@
   <link rel="stylesheet" type="text/css" href="css/welcome.css">
 </head>
 <body>
-<div class="container">
-  <h1><%= "Hello World!" %></h1>
-  <p>Welcome to Jakarta EE JSP Application</p>
-  <a href="hello-servlet">Go to Hello Servlet</a>
-</div>
+<%--<div class="container">--%>
+<%--  <h1><%= "Hello World!" %></h1>--%>
+<%--  <p>Welcome to Jakarta EE JSP Application</p>--%>
+<%--  <a href="servlet1">Go to Hello Servlet</a>--%>
+<%--</div>--%>
 </body>
 </html>
