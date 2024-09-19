@@ -5,17 +5,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Jakarta EE</title>
+  <title>Jakarta EE</title>
   <link rel="stylesheet" type="text/css" href="css/welcome.css">
+  <link rel="icon" href="https://images.ctfassets.net/l5fkpck1mwg3/1BROzHq9JQEMn7ZukjTfNX/cbd5765243427fd15fd3405e6cf37bc0/BWW_Web_AW5_10FreeBoneless_ProductImage__PromoCode_4000x3000.png">
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>Welcome to Jakarta EE Application</h1>
+    <h1>Jakarta EE</h1>
     <nav>
       <ul>
-        <li><a href="setAndGetValue.jsp">Set and Get Value</a></li>
-        <li><a href="home.jsp">Home</a></li>
+        <li><a href="message.jsp">Set and Get Value</a></li>
       </ul>
     </nav>
   </header>
