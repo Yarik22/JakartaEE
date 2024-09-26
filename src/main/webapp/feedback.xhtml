@@ -1,11 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-   <f:view>
-      <h:outputLabel value="Hello, world"/>
-   </f:view>
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .button {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .message {
+            color: red;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h1>Feedback Form</h1>
+
+    <h:form>
+        <h:panelGrid styleClass="form-grid">
+            <h:outputLabel value="First Name:" for="firstName"/>
+            <h:inputText id="firstName" value="#{feedbackController.firstName}" required="true" requiredMessage="First name is required"/>
+
+            <h:outputLabel value="Last Name:" for="lastName"/>
+            <h:inputText id="lastName" value="#{feedbackController.lastName}" required="true" requiredMessage="Last name is required"/>
+
+            <h:outputLabel value="Email:" for="email"/>
+            <h:inputText id="email" value="#{feedbackController.email}" required="true" requiredMessage="Email is required"/>
+        </h:panelGrid>
+
+        <h:commandButton value="Submit" action="#{feedbackController.submitFeedback}" styleClass="button"/>
+        <h:messages styleClass="message"/>
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Home" action="index.xhtml" styleClass="button"/>
+        <h:commandButton value="About Us" action="about.xhtml" styleClass="button"/>
+    </h:form>
+</h:body>
 </html>
