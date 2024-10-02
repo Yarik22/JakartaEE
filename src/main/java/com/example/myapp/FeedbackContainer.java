@@ -1,40 +1,27 @@
 package com.example.myapp;
 
-import java.io.Serializable;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public class Feedback implements Serializable {
-    private String firstName;
-    private String lastName;
-    private String email;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
-    // Конструктор
-    public Feedback(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+@ApplicationScoped
+public class FeedbackContainer {
+
+    private final List<Feedback> feedbackList = new ArrayList<>();
+    private final AtomicLong idCounter = new AtomicLong();
+
+    public void addFeedback(String message) {
+        Feedback feedback = new Feedback(idCounter.incrementAndGet(), message);
+        feedbackList.add(feedback);
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void removeFeedback(Feedback feedback) {
+        feedbackList.remove(feedback);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
     }
 }

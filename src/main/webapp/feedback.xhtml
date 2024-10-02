@@ -1,63 +1,106 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Feedback</title>
+    <title>Feedback Management</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
         }
-        h1 {
+
+        h2 {
             color: #333;
-        }
-        .button {
-            margin: 5px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0056b3;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            text-align: center;
             margin-bottom: 20px;
         }
-        .message {
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .data-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .data-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .data-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .error-message {
             color: red;
         }
     </style>
 </h:head>
+
 <h:body>
-    <h1>Feedback Form</h1>
-
-    <h:form>
-        <h:panelGrid styleClass="form-grid">
-            <h:outputLabel value="First Name:" for="firstName"/>
-            <h:inputText id="firstName" value="#{feedbackController.firstName}" required="true" requiredMessage="First name is required"/>
-
-            <h:outputLabel value="Last Name:" for="lastName"/>
-            <h:inputText id="lastName" value="#{feedbackController.lastName}" required="true" requiredMessage="Last name is required"/>
-
-            <h:outputLabel value="Email:" for="email"/>
-            <h:inputText id="email" value="#{feedbackController.email}" required="true" requiredMessage="Email is required"/>
-        </h:panelGrid>
-
-        <h:commandButton value="Submit" action="#{feedbackController.submitFeedback}" styleClass="button"/>
-        <h:messages styleClass="message"/>
-    </h:form>
+    <h2>Feedback List</h2>
 
     <h:form>
         <h:commandButton value="Home" action="index.xhtml" styleClass="button"/>
         <h:commandButton value="About Us" action="about.xhtml" styleClass="button"/>
     </h:form>
+
+    <h:form class="form-container">
+        <h:outputLabel value="Add new feedback: " />
+
+        <h:inputText id="newFeedback" value="#{feedbackController.newFeedback}"
+                     required="true"
+                     validatorMessage="Feedback must be between 5 and 500 characters!"
+                     styleClass="inputField" />
+
+        <h:message for="newFeedback" styleClass="error-message" />
+
+        <h:commandButton value="Add" action="#{feedbackController.addFeedback}" styleClass="button"/>
+    </h:form>
+
+    <h:dataTable id="feedbackTable" value="#{feedbackController.feedbackList}" var="feedback" styleClass="data-table">
+        <h:column>
+            <f:facet name="header">Feedback</f:facet>
+            <h:outputText value="#{feedback.message}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Action</f:facet>
+            <h:form>
+            <h:commandButton value="Delete"
+                             action="#{feedbackController.removeFeedback(feedback)}"
+                             styleClass="button"
+                             update="feedbackTable" />
+            </h:form>
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>

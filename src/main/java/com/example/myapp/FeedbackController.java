@@ -1,56 +1,52 @@
 package com.example.myapp;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import java.io.Serializable;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
-import jakarta.validation.constraints.Pattern;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class FeedbackController implements Serializable {
 
-    @NotBlank(message = "First name cannot be empty")
-    private String firstName;
+    @Inject
+    private FeedbackContainer feedbackContainer;
 
-    @NotBlank(message = "Last name cannot be empty")
-    private String lastName;
+    @NotEmpty(message = "Feedback cannot be empty!")
+    @Size(min = 5, max = 500, message = "Feedback must be between 5 and 500 characters!")
+    private String newFeedback;
 
-    @NotBlank(message = "Email cannot be empty")
-    @Email(message = "Please provide a valid email address")
-    @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
-    private String email;
-
-    public String getFirstName() {
-        return firstName;
+    public String getNewFeedback() {
+        return newFeedback;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setNewFeedback(String newFeedback) {
+        this.newFeedback = newFeedback;
+    }
+    
+    public void addFeedback() {
+        if (newFeedback != null && !newFeedback.trim().isEmpty()) {
+            feedbackContainer.addFeedback(newFeedback);
+            newFeedback = "";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Feedback cannot be empty!", null));
+        }
     }
 
-    public String getLastName() {
-        return lastName;
+    public void removeFeedback(Feedback feedback) {
+        feedbackContainer.removeFeedback(feedback);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Feedback removed!", null));
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String submitFeedback() {
-
-        System.out.println("Feedback submitted successfully");
-        return "index.xhtml";
+    public List<Feedback> getFeedbackList() {
+        return feedbackContainer.getFeedbackList();
     }
 }
-
