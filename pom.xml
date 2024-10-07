@@ -23,7 +23,13 @@
       <artifactId>jakarta.jakartaee-api</artifactId>
       <version>9.1.0</version>
       <scope>provided</scope>
-    </dependency><dependency>
+    </dependency>
+      <dependency>
+          <groupId>jakarta.faces</groupId>
+          <artifactId>jakarta.faces-api</artifactId>
+          <version>4.1.0</version>
+      </dependency>
+      <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet</artifactId>
       <version>3.0.13</version>
@@ -33,6 +39,12 @@
       <artifactId>jersey-media-json-jackson</artifactId>
       <version>3.0.13</version>
     </dependency>
+      <dependency>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>42.7.4</version>
+      </dependency>
+
 <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-cdi2-se</artifactId>

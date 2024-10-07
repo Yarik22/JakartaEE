@@ -1,67 +1,95 @@
 package myapp.bean;
 
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 import myapp.entity.User;
+import myapp.service.UserService;
 
 import java.util.List;
 
-@Stateless
-public class UserStatelessBean {
+@Named
+@RequestScoped
+public class UserBean {
+    private User user = new User();
+    private List<User> users;
+    private List<String> usersWithSubstring;
+    private List<String> userInfoList;
+    private String substring;
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+    private final UserService userService;
 
-    public void createUser(User user) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
-        em.close();
+    public UserBean() {
+        this.userService = new UserService();
+        loadUsers();
     }
 
-    public User readUser(Long id) {
-        EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, id);
-        em.close();
-        return user;
+    public void loadUsers() {
+        users = userService.findAllUsers(10);
     }
 
-    public void updateUser(User user) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.merge(user); // Use merge to update the user
-        em.getTransaction().commit();
-        em.close();
+    public String createUser() {
+        userService.createUser(user);
+        loadUsers();
+        user = new User();
+        return "users";
+    }
+
+    public String editUser(Long id) {
+        user = userService.findById(id);
+        return "editUser";
+    }
+
+    public String updateUser() {
+        if (user.getId() != null) {
+            userService.updateUser(user);
+        }
+        loadUsers();
+        user = new User();
+        return "users";
     }
 
     public void deleteUser(Long id) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        User user = em.find(User.class, id);
-        if (user != null) {
-            em.remove(user);
-        }
-        em.getTransaction().commit();
-        em.close();
+        userService.deleteUser(id);
+        loadUsers();
     }
 
-    public List<User> findAllUsers() {
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<User> query = em.createNamedQuery("User.findAll", User.class);
-        List<User> users = query.getResultList();
-        em.close();
+    public void searchUsersWithSubstring() {
+        usersWithSubstring = userService.findUsersWithSubstringInName(substring);
+    }
+
+    public void loadUserFullNamesAndEmailLength() {
+        userInfoList = userService.findUserFullNamesAndEmailLength();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<User> getUsers() {
         return users;
     }
 
-    public User findById(Long id) {
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<User> query = em.createNamedQuery("User.findById", User.class);
-        query.setParameter("id", id);
-        User user = query.getSingleResult();
-        em.close();
-        return user;
+    public int getUserCount() {
+        return users != null ? users.size() : 0;
+    }
+
+    public List<String> getUsersWithSubstring() {
+        return usersWithSubstring;
+    }
+
+    public List<String> getUserInfoList() {
+        return userInfoList;
+    }
+
+    public String getSubstring() {
+        return substring;
+    }
+
+    public void setSubstring(String substring) {
+        this.substring = substring;
     }
 }

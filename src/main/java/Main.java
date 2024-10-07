@@ -1,38 +1,20 @@
-package myapp.service;
-
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import myapp.entity.User;
 
-import java.util.List;
+public class Main {
+    public static void main(String[] args) {
+        User user = new User();
+        user.setEmail("test@gmail.com");
+        user.setName("test");
 
-@Transactional
-public class UserService {
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public List<User> findAll() {
-        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
-    }
-
-    public User findById(Long id) {
-        return entityManager.find(User.class, id);
-    }
-
-    public void create(User user) {
-        entityManager.persist(user);
-    }
-
-    public void update(User user) {
-        entityManager.merge(user);
-    }
-
-    public void delete(Long id) {
-        User user = findById(id);
-        if (user != null) {
-            entityManager.remove(user);
-        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
     }
 }
