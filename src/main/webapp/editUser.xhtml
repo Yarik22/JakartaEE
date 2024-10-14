@@ -17,15 +17,6 @@
             margin-bottom: 20px;
         }
 
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
         .form-grid {
             width: 100%;
         }
@@ -84,6 +75,10 @@
         <h:messages styleClass="validation-messages" globalOnly="true" />
 
         <h:panelGrid columns="2" styleClass="form-grid">
+
+            <h:outputLabel for="id" value="User ID: #{userBean.user.id}" styleClass="form-label" />
+            <h:inputHidden id="id" value="#{userBean.user.id}" />
+
             <h:outputLabel for="name" value="Name:" styleClass="form-label" />
             <h:inputText id="name" value="#{userBean.user.name}" required="true"  requiredMessage="Name is required" styleClass="form-input" />
 
