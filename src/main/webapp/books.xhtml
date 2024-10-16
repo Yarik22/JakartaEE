@@ -4,21 +4,75 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>List of Books</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .page-title {
+            color: #333;
+            text-align: center;
+        }
+        .form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-header {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+        .table-cell {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .table-row:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </h:head>
 <h:body>
-    <h2>List of Books</h2>
-    <h:form>
-        <h:commandButton value="Add" action="bookForm.xhtml" />
+    <h2 class="page-title">List of Books</h2>
+
+    <h:form class="form-container">
+        <h:commandButton value="Add" action="bookForm.xhtml" styleClass="btn" />
     </h:form>
-    
-    <h:dataTable value="#{bookBean.books}" var="book" border="1">
+
+    <h:dataTable value="#{bookBean.books}" var="book" border="1" styleClass="table">
         <h:column>
-            <f:facet name="header">Name</f:facet>
-            #{book.title}
+            <f:facet name="header">
+                <div class="table-header">Name</div>
+            </f:facet>
+            <div class="table-cell">#{book.title}</div>
         </h:column>
         <h:column>
-            <f:facet name="header">Author</f:facet>
-            #{book.author}
+            <f:facet name="header">
+                <div class="table-header">Author</div>
+            </f:facet>
+            <div class="table-cell">#{book.author}</div>
         </h:column>
     </h:dataTable>
 </h:body>
