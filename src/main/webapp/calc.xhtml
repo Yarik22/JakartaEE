@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Calculation Bean Example</title>
+</h:head>
+<h:body>
+    <h1>Calculation Example</h1>
+
+    <!-- Відображення початкового значення -->
+    <h:outputLabel value="Initial Value: " />
+    <h:outputText value="#{calculationController.initialValue}" />
+
+    <!-- Відображення поточного значення -->
+    <h:outputLabel value="Current Value: " />
+    <h:outputText value="#{calculationController.currentValue}" />
+
+    <!-- Форма для додавання -->
+    <h:form>
+        <h:outputLabel value="Add value: " />
+        <h:inputText value="#{calculationController.valueToAdd}" />
+        <h:commandButton value="Add" action="#{calculationController.add}" />
+    </h:form>
+
+    <!-- Форма для віднімання -->
+    <h:form>
+        <h:outputLabel value="Subtract value: " />
+        <h:inputText value="#{calculationController.valueToSubtract}" />
+        <h:commandButton value="Subtract" action="#{calculationController.subtract}" />
+    </h:form>
+
+    <!-- Виведення метаданих про Bean -->
+    <h:outputLabel value="Bean Metadata: " />
+    <h:outputText value="#{calculationController.beanMetadata}" />
+
+</h:body>
+</html>
