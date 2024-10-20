@@ -1,11 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-   <f:view>
-      <h:outputLabel value="Hello, world"/>
-   </f:view>
+<h:head>
+    <title>Calculation Demo</title>
+</h:head>
+<h:body>
+    <h1>Calculation Demo</h1>
+
+    <!-- Форма для встановлення початкового значення -->
+    <h:form>
+        <h:outputLabel for="initialValue" value="Set initial value: " />
+        <h:inputText id="initialValue" value="#{calculationBean.initialValue}" />
+        <h:commandButton value="Update" action="#{calculationBean.setInitialValue(calculationBean.initialValue)}" />
+    </h:form>
+
+    <!-- Додавання значення -->
+    <h:form>
+        <h:outputLabel for="addValue" value="Add value: " />
+        <h:inputText id="addValue" value="#{calculationController.addValue}" />
+        <h:commandButton value="Add" action="#{calculationController.performAdd}" />
+    </h:form>
+
+    <!-- Віднімання значення -->
+    <h:form>
+        <h:outputLabel for="subtractValue" value="Subtract value: " />
+        <h:inputText id="subtractValue" value="#{calculationController.subtractValue}" />
+        <h:commandButton value="Subtract" action="#{calculationController.performSubtract}" />
+    </h:form>
+
+    <!-- Відображення результату -->
+    <h:form>
+        <h:outputLabel value="Result: " />
+        <h:outputText value="#{calculationBean.result}" />
+    </h:form>
+
+    <!-- Відображення результату через @Produces -->
+    <h:form>
+        <h:outputLabel value="Produced Result: " />
+        <h:outputText value="#{producedResult}" />
+    </h:form>
+
+    <h:form>
+        <h:outputLabel value="Class Name: " />
+        <h:outputText value="#{calculationBean.className}" />
+    </h:form>
+
+    <h:form>
+        <h:outputLabel value="Package Name: " />
+        <h:outputText value="#{calculationBean.packageName}" />
+    </h:form>
+</h:body>
 </html>

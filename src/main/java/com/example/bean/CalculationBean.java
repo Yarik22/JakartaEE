@@ -1,57 +1,60 @@
 package com.example.bean;
 
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 
-import java.io.Serializable;
-
 @Named
-@SessionScoped
-public class CalculationBean implements Serializable {
+@RequestScoped
+public class CalculationBean {
 
+    private int initialValue;
+    private int result;
 
-    // Поле для початкового значення
-    private int initialValue = 10;
-
-    // Поточне значення для операцій
-    private int currentValue;
-
-    // Конструктор
     public CalculationBean() {
-        this.currentValue = initialValue;
+        // Початкове значення
+        this.initialValue = 10;
+        this.result = initialValue;
     }
 
-    // @Produces для надання початкового значення
-    @Produces
-    @Named("initialValue")
-    public int produceInitialValue() {
-        return initialValue;
-    }
-
-    // Методи для додавання і віднімання
+    // Метод для додавання
     public void add(int value) {
-        currentValue += value;
+        this.result += value;
     }
 
+    // Метод для віднімання
     public void subtract(int value) {
-        currentValue -= value;
+        this.result -= value;
     }
 
-    // Геттери та сеттери
-    public int getCurrentValue() {
-        return currentValue;
+    // Getter для результату
+    public int getResult() {
+        return result;
     }
 
-    public void setCurrentValue(int currentValue) {
-        this.currentValue = currentValue;
+    // @Produces для результату
+    @Produces
+    @Named("producedResult")
+    public int getProducedResult() {
+        return result;
     }
 
+    // Getter та Setter для початкового значення
     public int getInitialValue() {
         return initialValue;
     }
 
     public void setInitialValue(int initialValue) {
         this.initialValue = initialValue;
+        this.result = initialValue; // оновлюємо результат, щоб синхронізувати
     }
+
+    public String getClassName() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getPackageName() {
+        return this.getClass().getPackageName();
+    }
+
 }
